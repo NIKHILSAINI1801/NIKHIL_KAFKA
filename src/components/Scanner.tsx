@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { User } from "firebase/auth";
 import { Search, ShieldAlert, ShieldCheck, Download, Loader2, AlertTriangle, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { jsPDF } from "jspdf";
@@ -7,10 +6,6 @@ import autoTable from "jspdf-autotable";
 import { cn } from "../lib/utils";
 import { GoogleGenAI } from "@google/genai";
 
-interface ScannerProps {
-  user: User | null;
-  onAuthRequired: () => void;
-}
 
 interface Vulnerability {
   title: string;
@@ -25,7 +20,7 @@ interface ScanResult {
   summary: string;
 }
 
-export default function Scanner({ user, onAuthRequired }: ScannerProps) {
+export default function Scanner() {
   const [url, setUrl] = useState("");
   const [isScanning, setIsScanning] = useState(false);
   const [result, setResult] = useState<ScanResult | null>(null);
@@ -33,10 +28,6 @@ export default function Scanner({ user, onAuthRequired }: ScannerProps) {
 
   const handleScan = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) {
-      onAuthRequired();
-      return;
-    }
     if (!url) return;
 
     setIsScanning(true);

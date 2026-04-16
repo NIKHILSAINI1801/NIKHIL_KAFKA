@@ -2,34 +2,22 @@
  * KAFKA Cybersecurity Suite
  */
 
-import { useState, useEffect } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "./firebase";
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Scanner from "./components/Scanner";
 import Simulator from "./components/Simulator";
 import Chatbot from "./components/Chatbot";
 import WhatsApp from "./components/WhatsApp";
-import AuthModal from "./components/AuthModal";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function App() {
-  const [user, setUser] = useState<User | null>(null);
   const [activeTab, setActiveTab] = useState("home");
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
 
   const renderContent = () => {
     switch (activeTab) {
       case "scanner":
-        return <Scanner user={user} onAuthRequired={() => setIsAuthModalOpen(true)} />;
+        return <Scanner />;
       case "simulator":
         return <Simulator />;
       case "chatbot":
@@ -44,10 +32,8 @@ export default function App() {
   return (
     <div className="flex h-screen bg-bg-deep text-text-main overflow-hidden">
       <Navbar 
-        user={user} 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
-        onLogin={() => setIsAuthModalOpen(true)} 
       />
       
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
@@ -79,11 +65,6 @@ export default function App() {
           </AnimatePresence>
         </div>
       </main>
-
-      <AuthModal 
-        isOpen={isAuthModalOpen} 
-        onClose={() => setIsAuthModalOpen(false)} 
-      />
     </div>
   );
 }

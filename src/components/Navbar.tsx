@@ -1,16 +1,12 @@
-import { User, signOut } from "firebase/auth";
-import { auth } from "../firebase";
-import { Shield, LayoutDashboard, Zap, MessageSquare, LogOut, User as UserIcon, Phone } from "lucide-react";
+import { Shield, LayoutDashboard, Zap, MessageSquare, Phone } from "lucide-react";
 import { cn } from "../lib/utils";
 
 interface NavbarProps {
-  user: User | null;
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  onLogin: () => void;
 }
 
-export default function Navbar({ user, activeTab, setActiveTab, onLogin }: NavbarProps) {
+export default function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   const navItems = [
     { id: "home", label: "Dashboard", icon: Shield },
     { id: "scanner", label: "Web Scanner", icon: LayoutDashboard },
@@ -50,33 +46,15 @@ export default function Navbar({ user, activeTab, setActiveTab, onLogin }: Navba
       </div>
 
       <div className="p-6 mt-auto border-t border-border-dim">
-        {user ? (
-          <div className="flex items-center gap-3">
-            {user.photoURL ? (
-              <img src={user.photoURL} alt="Avatar" className="w-8 h-8 rounded-full border border-border-dim" />
-            ) : (
-              <div className="w-8 h-8 rounded-full bg-bg-surface border border-border-dim flex items-center justify-center">
-                <UserIcon className="w-4 h-4 text-text-dim" />
-              </div>
-            )}
-            <div className="flex flex-col min-w-0">
-              <span className="text-[11px] font-bold truncate">{user.displayName || user.email}</span>
-              <button 
-                onClick={() => signOut(auth)}
-                className="text-[9px] text-text-dim hover:text-risk-high text-left uppercase tracking-tighter"
-              >
-                Terminate Session
-              </button>
-            </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-risk-low rounded-full animate-pulse" />
+            <span className="text-[10px] text-text-dim font-mono uppercase">System Active</span>
           </div>
-        ) : (
-          <button 
-            onClick={onLogin} 
-            className="w-full py-2 bg-accent-neon text-bg-deep text-[10px] font-bold uppercase tracking-widest rounded hover:opacity-90 transition-opacity"
-          >
-            Initialize Auth
-          </button>
-        )}
+          <div className="text-[9px] text-text-dim/50 font-mono">
+            v2.4.0-STABLE
+          </div>
+        </div>
       </div>
     </nav>
   );
