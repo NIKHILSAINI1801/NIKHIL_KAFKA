@@ -1,0 +1,43 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Scan": {
+      "title": "Scan",
+      "description": "Vulnerability scan results",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "url": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "scanning", "completed", "failed"] },
+        "riskScore": { "type": "number" },
+        "vulnerabilities": { "type": "array" },
+        "recommendations": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "url", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile data"
+    },
+    "/scans/{scanId}": {
+      "schema": "Scan",
+      "description": "Vulnerability scan reports"
+    }
+  }
+}

@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-deep: #0a0b10;
+  --color-bg-panel: #14161e;
+  --color-bg-surface: #1e212b;
+  --color-accent-neon: #00f2ff;
+  --color-risk-high: #ff4d4d;
+  --color-risk-med: #ffaa00;
+  --color-risk-low: #00e676;
+  --color-text-main: #e0e0e0;
+  --color-text-dim: #9499a6;
+  --color-border-dim: #2d313f;
+  
+  --font-mono: "Courier New", Courier, monospace;
+  --font-serif: "Playfair Display", serif;
+}
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+  body {
+    @apply bg-bg-deep text-text-main font-sans antialiased;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply bg-bg-panel border border-border-dim rounded-lg overflow-hidden flex flex-col;
+  }
+  
+  .panel-header {
+    @apply px-4 py-3 border-b border-border-dim flex justify-between items-center;
+  }
+  
+  .panel-title {
+    @apply text-[11px] uppercase text-text-dim tracking-wider font-bold;
+  }
+
+  .cyber-button {
+    @apply px-4 py-2 rounded bg-accent-neon text-bg-deep font-bold text-xs uppercase tracking-wider 
+           hover:opacity-90 transition-all duration-200 disabled:opacity-50;
+  }
+
+  .badge {
+    @apply px-2 py-0.5 rounded text-[10px] font-bold uppercase border;
+  }
+
+  .badge-high {
+    @apply bg-risk-high/15 text-risk-high border-risk-high;
+  }
+
+  .badge-med {
+    @apply bg-risk-med/15 text-risk-med border-risk-med;
+  }
+
+  .badge-low {
+    @apply bg-risk-low/15 text-risk-low border-risk-low;
+  }
+
+  .stat-label {
+    @apply text-[10px] text-text-dim uppercase mb-1;
+  }
+
+  .stat-value {
+    @apply font-mono text-lg text-accent-neon;
+  }
+
+  .kafka-stamp {
+    @apply border-2 border-risk-high text-risk-high font-serif italic font-black px-4 py-1 
+           uppercase tracking-[0.3em] rotate-[-12deg] opacity-60 pointer-events-none select-none;
+    text-shadow: 0 0 10px rgba(255, 77, 77, 0.3);
+  }
+
+  .official-seal {
+    @apply w-16 h-16 border border-text-dim/20 rounded-full flex items-center justify-center 
+           text-[8px] font-mono text-text-dim/40 uppercase text-center p-2 leading-none;
+  }
+}
+
+
